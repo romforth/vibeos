@@ -32,11 +32,12 @@ my %repos = (
 
 # Define where to clone the repositories
 my $base_dir = "/tmp/minimal-linux";
+my $iso_dir = "$base_dir/iso";  # Directory to create ISO
+my $boot_dir = "$iso_dir/boot"; # Boot directory for the ISO
+my $grub_dir = "$boot_dir/grub"; # GRUB directory for the menu
 
-# Create the base directory if it doesn't exist
-unless (-d $base_dir) {
-    make_path($base_dir) or die "Failed to create directory $base_dir: $!\n";
-}
+# Create the necessary directories if they don't exist
+make_path($iso_dir, $boot_dir, $grub_dir) or die "Failed to create ISO directories: $!\n";
 
 # Change into the base directory
 chdir($base_dir) or die "Failed to change directory to $base_dir: $!\n";
@@ -89,7 +90,7 @@ sub clone_repo {
 sub install_dependencies {
     print "Installing dependencies...\n";
     system("sudo apt update") == 0 or die "Failed to update packages: $!\n";
-    system("sudo apt install -y build-essential autoconf automake libtool curl") == 0
+    system("sudo apt install -y build-essential autoconf automake libtool curl grub-pc xorriso") == 0
         or die "Failed to install build tools and dependencies: $!\n";
 }
 
@@ -116,6 +117,50 @@ sub build_from_source {
 
     # Change back to the base directory
     chdir($base_dir) or die "Failed to change back to base directory: $!\n";
+}
+
+# Function to set up GRUB bootloader
+sub setup_grub {
+    print "Setting up GRUB bootloader...\n";
+
+    my $grub_cfg = "$grub_dir/grub.cfg";
+
+    open(my $fh, '>', $grub_cfg) or die "Cannot open GRUB config file: $!\n";
+
+    print $fh <<'END';
+set default=0
+set timeout=5
+
+menuentry "Minimal Linux" {
+    set root=(hd0)
+    linux /boot/vmlinuz root=/dev/sda1 ro
+    initrd /boot/initrd.img
+}
+END
+
+    close($fh) or die "Failed to write GRUB config: $!\n";
+}
+
+# Function to copy kernel and busybox to boot directory
+sub copy_kernel_and_busybox {
+    print "Copying kernel and BusyBox to boot directory...\n";
+
+    # Copy the kernel
+    system("cp $base_dir/linux/arch/x86/boot/bzImage $boot_dir/vmlinuz") == 0
+        or die "Failed to copy kernel to boot directory: $!\n";
+
+    # Copy the BusyBox binary (assuming it was built)
+    system("cp $base_dir/busybox/_install/bin/busybox $boot_dir/bin") == 0
+        or die "Failed to copy BusyBox to boot directory: $!\n";
+}
+
+# Function to create the bootable ISO
+sub create_iso {
+    print "Creating ISO...\n";
+
+    # Use xorriso to create the ISO
+    system("xorriso -as mkisofs -o $base_dir/minimal-linux.iso -b boot/grub/iso9660.img -c boot.cat -boot-load-size 4 -boot-info-table $iso_dir") == 0
+        or die "Failed to create ISO: $!\n";
 }
 
 # Clone all repositories and checkout the appropriate tag (either manual or latest)
@@ -160,17 +205,15 @@ build_from_source(
     "sudo make install",  # Install Make
 );
 
+# Copy kernel and BusyBox to boot directory
+copy_kernel_and_busybox();
+
+# Set up GRUB bootloader
+setup_grub();
+
+# Create the bootable ISO
+create_iso();
+
 # After cloning and building, set up a minimal Linux build environment
-# Example of how you would build the Linux kernel using defconfig:
-print "Repositories have been cloned and checked out to their specified tags (or latest stable versions).\n";
-print "Git, GCC, and Make have been built and installed.\n";
-print "You can now proceed to configure and build the kernel and BusyBox manually:\n";
-print "  cd $base_dir/linux\n";
-print "  make x86_64_defconfig  # Configure the kernel with a minimal defconfig for x86_64\n";
-print "  make                   # Build the kernel\n";
-print "  cd ../busybox\n";
-print "  make defconfig         # Configure BusyBox with the default defconfig\n";
-print "  make                   # Build BusyBox\n";
-
-print "Done!\n";
-
+print "Bootable ISO has been created successfully!\n";
+print "You can now use it to boot your system.\n";
