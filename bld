@@ -73,6 +73,47 @@ my %repos = (
         url  => "https://git.savannah.gnu.org/git/parted.git",
         tag  => "parted-3.4",  # Specify the version you want
     },
+    # Other missing packages
+    "openrc" => {
+        url  => "https://github.com/OpenRC/openrc.git",
+        tag  => "0.44.5",  # Specific version of OpenRC
+    },
+    "iproute2" => {
+        url  => "https://github.com/shemminger/iproute2.git",
+        tag  => "v5.17.0",  # Latest stable version of iproute2
+    },
+    "net-tools" => {
+        url  => "https://github.com/schweikert/net-tools.git"
+        tag  => "v1.60.0",  # Latest stable version of net-tools
+    },
+    "xfsprogs" => {
+        url  => "https://github.com/xfs/xfsprogs.git",
+        tag  => "v5.14.0",  # Latest stable version of xfsprogs
+    },
+    "musl" => {
+        url  => "https://github.com/sabotage-linux/musl.git",
+        tag  => "v1.2.2",  # Latest stable version of musl
+    },
+    "uClibc" => {
+        url  => "https://github.com/uClibc/uClibc.git",
+        tag  => "2015.08",  # Specific stable version
+    },
+    "bzip2" => {
+        url  => "https://github.com/mirror/bzip2.git",
+        tag  => "v1.0.8",  # Latest stable version
+    },
+    "xz-utils" => {
+        url  => "https://git.tukaani.org/xz.git",
+        tag  => "v5.2.5",  # Latest stable version of xz-utils
+    },
+    "procps" => {
+        url  => "https://gitlab.com/procps-ng/procps.git",
+        tag  => "v3.3.17",  # Latest stable version of procps
+    },
+    "lvm2" => {
+        url  => "https://github.com/lvmteam/lvm2.git",
+        tag  => "v2.03.16",  # Latest stable version of lvm2
+    },
 );
 
 # Define where to clone the repositories
