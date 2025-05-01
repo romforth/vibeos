@@ -114,6 +114,23 @@ my %repos = (
         url  => "https://github.com/lvmteam/lvm2.git",
         tag  => "v2.03.16",  # Latest stable version of lvm2
     },
+    # Add X server components
+    "xorg" => {
+        url  => "https://github.com/xorg/xserver.git",
+        tag  => "xorg-server-21.1.0",  # Xorg server version
+    },
+    "xorg-drivers" => {
+        url  => "https://gitlab.freedesktop.org/xorg/driver/xf86-video-vesa.git",
+        tag  => "vesa-2.5.0",  # Basic video driver
+    },
+    "xorg-utils" => {
+        url  => "https://gitlab.freedesktop.org/xorg/app/xprop.git",
+        tag  => "xprop-1.2.5",  # Utility for X11 window properties
+    },
+    "xorg-xinit" => {
+        url  => "https://gitlab.freedesktop.org/xorg/app/xinit.git",
+        tag  => "xinit-1.4.1",  # Utility for starting the X server
+    },
 );
 
 # Define where to clone the repositories
