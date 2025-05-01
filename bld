@@ -16,6 +16,18 @@ my %repos = (
         url  => "https://github.com/mirror/busybox.git",
         tag  => "1.35.0",   # Manually defined version (you can replace this with 'latest' to use the latest tag)
     },
+    "git" => {
+        url  => "https://github.com/git/git.git",
+        tag  => "v2.37.0",  # You can change the tag to the latest version or specify a custom tag
+    },
+    "gcc" => {
+        url  => "https://github.com/gcc-mirror/gcc.git",
+        tag  => "releases/gcc-11.2.0", # You can change to the latest stable version or use a custom tag
+    },
+    "make" => {
+        url  => "https://github.com/mirror/make.git",
+        tag  => "v4.3", # Manually specified version (replace with the latest if desired)
+    },
 );
 
 # Define where to clone the repositories
@@ -73,6 +85,44 @@ sub clone_repo {
     chdir($base_dir) or die "Failed to change back to base directory: $!\n";
 }
 
+# Function to install dependencies and build tools (git, make, gcc, etc.)
+sub install_dependencies {
+    print "Installing dependencies...\n";
+    system("sudo apt update") == 0 or die "Failed to update packages: $!\n";
+    system("sudo apt install -y build-essential autoconf automake libtool curl") == 0
+        or die "Failed to install build tools and dependencies: $!\n";
+}
+
+# Function to build Git from source
+sub build_git {
+    print "Building Git from source...\n";
+    chdir("$base_dir/git") or die "Failed to change to git directory: $!\n";
+
+    system("make prefix=/usr/local all") == 0 or die "Git build failed: $!\n";
+    system("sudo make prefix=/usr/local install") == 0 or die "Git installation failed: $!\n";
+}
+
+# Function to build GCC from source
+sub build_gcc {
+    print "Building GCC from source...\n";
+    chdir("$base_dir/gcc") or die "Failed to change to gcc directory: $!\n";
+
+    system("./configure --prefix=/usr/local --enable-languages=c,c++") == 0
+        or die "GCC configure failed: $!\n";
+    system("make -j$(nproc)") == 0 or die "GCC build failed: $!\n";
+    system("sudo make install") == 0 or die "GCC installation failed: $!\n";
+}
+
+# Function to build Make from source
+sub build_make {
+    print "Building Make from source...\n";
+    chdir("$base_dir/make") or die "Failed to change to make directory: $!\n";
+
+    system("./configure") == 0 or die "Make configure failed: $!\n";
+    system("make -j$(nproc)") == 0 or die "Make build failed: $!\n";
+    system("sudo make install") == 0 or die "Make installation failed: $!\n";
+}
+
 # Clone all repositories and checkout the appropriate tag (either manual or latest)
 foreach my $repo_name (keys %repos) {
     my $repo_url = $repos{$repo_name}->{url};
@@ -88,12 +138,18 @@ foreach my $repo_name (keys %repos) {
     clone_repo($repo_name, $repo_url, $repo_tag);
 }
 
-# After cloning, set up a minimal Linux build environment
-# You can add additional steps for configuring and building the kernel, BusyBox, etc.
-print "Repositories have been cloned and checked out to their specified tags (or latest stable versions).\n";
+# Install dependencies (e.g., build tools, compilers)
+install_dependencies();
 
-# Example of how you would build the Linux kernel using defconfig (just an example):
-# This would need to be customized to your environment!
+# Build Git, GCC, and Make from source
+build_git();
+build_gcc();
+build_make();
+
+# After cloning and building, set up a minimal Linux build environment
+# Example of how you would build the Linux kernel using defconfig:
+print "Repositories have been cloned and checked out to their specified tags (or latest stable versions).\n";
+print "Git, GCC, and Make have been built and installed.\n";
 print "You can now proceed to configure and build the kernel and BusyBox manually:\n";
 print "  cd $base_dir/linux\n";
 print "  make x86_64_defconfig  # Configure the kernel with a minimal defconfig for x86_64\n";
