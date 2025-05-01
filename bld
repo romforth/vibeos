@@ -1,0 +1,62 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use File::Path qw(make_path);
+use File::Basename;
+
+# Define the repositories to pull
+my %repos = (
+    "linux"  => "https://github.com/torvalds/linux.git",
+    "busybox" => "https://github.com/mirror/busybox.git",
+);
+
+# Define where to clone the repositories
+my $base_dir = "/tmp/minimal-linux";
+
+# Create the base directory if it doesn't exist
+unless (-d $base_dir) {
+    make_path($base_dir) or die "Failed to create directory $base_dir: $!\n";
+}
+
+# Change into the base directory
+chdir($base_dir) or die "Failed to change directory to $base_dir: $!\n";
+
+# Function to clone a Git repository
+sub clone_repo {
+    my ($repo_name, $repo_url) = @_;
+    my $repo_dir = "$base_dir/$repo_name";
+
+    if (-d $repo_dir) {
+        print "$repo_name already exists, pulling latest changes...\n";
+        chdir($repo_dir) or die "Failed to change into repo directory: $!\n";
+        system("git pull") == 0 or die "Git pull failed for $repo_name: $!\n";
+    } else {
+        print "Cloning $repo_name from $repo_url...\n";
+        system("git clone $repo_url") == 0 or die "Git clone failed for $repo_name: $!\n";
+    }
+
+    # Change back to the base directory after cloning or pulling
+    chdir($base_dir) or die "Failed to change back to base directory: $!\n";
+}
+
+# Clone all repositories defined above
+foreach my $repo_name (keys %repos) {
+    clone_repo($repo_name, $repos{$repo_name});
+}
+
+# After cloning, set up a minimal Linux build environment
+# You can add additional steps for configuring and building the kernel, BusyBox, etc.
+print "Repositories have been cloned.\n";
+
+# Example of how you would build the Linux kernel (just an example):
+# This would need to be customized to your environment!
+print "You can now proceed to configure and build the kernel and BusyBox manually:\n";
+print "  cd $base_dir/linux\n";
+print "  make menuconfig  # Configure the kernel\n";
+print "  make             # Build the kernel\n";
+print "  cd ../busybox\n";
+print "  make menuconfig  # Configure BusyBox\n";
+print "  make             # Build BusyBox\n";
+
+print "Done!\n";
+
