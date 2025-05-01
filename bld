@@ -3,16 +3,18 @@ use strict;
 use warnings;
 use File::Path qw(make_path);
 use File::Basename;
+use LWP::Simple;
+use JSON;
 
-# Define the repositories to pull and their corresponding tags
+# Define the repositories to pull with manual or latest tags
 my %repos = (
     "linux"  => {
         url  => "https://github.com/torvalds/linux.git",
-        tag  => "v5.10.0",  # Example version tag for the Linux kernel
+        tag  => "v5.15.0",  # Manually defined version (you can replace this with 'latest' to use the latest tag)
     },
     "busybox" => {
         url  => "https://github.com/mirror/busybox.git",
-        tag  => "1.32.0",   # Example version tag for BusyBox
+        tag  => "1.35.0",   # Manually defined version (you can replace this with 'latest' to use the latest tag)
     },
 );
 
@@ -26,6 +28,29 @@ unless (-d $base_dir) {
 
 # Change into the base directory
 chdir($base_dir) or die "Failed to change directory to $base_dir: $!\n";
+
+# Function to fetch the latest stable tag from GitHub
+sub get_latest_tag {
+    my $repo_url = shift;
+    my $repo_name = basename($repo_url, '.git');
+    my $api_url = "https://api.github.com/repos/$repo_name/releases/latest";
+
+    # Fetch the JSON data from the GitHub API
+    my $json = get($api_url);
+    unless ($json) {
+        die "Failed to fetch data from GitHub API for $repo_name\n";
+    }
+
+    # Parse the JSON response
+    my $data = decode_json($json);
+
+    # Extract the latest stable release tag
+    if ($data && exists $data->{tag_name}) {
+        return $data->{tag_name};
+    } else {
+        die "Could not find tag in GitHub API response for $repo_name\n";
+    }
+}
 
 # Function to clone a Git repository and checkout a specific tag
 sub clone_repo {
@@ -48,16 +73,24 @@ sub clone_repo {
     chdir($base_dir) or die "Failed to change back to base directory: $!\n";
 }
 
-# Clone all repositories defined above
+# Clone all repositories and checkout the appropriate tag (either manual or latest)
 foreach my $repo_name (keys %repos) {
     my $repo_url = $repos{$repo_name}->{url};
     my $repo_tag = $repos{$repo_name}->{tag};
+
+    # If the tag is 'latest', fetch the latest stable tag dynamically
+    if ($repo_tag eq 'latest') {
+        print "Fetching the latest stable version for $repo_name...\n";
+        $repo_tag = get_latest_tag($repo_url);  # Fetch the latest stable tag from GitHub
+    }
+
+    print "Using tag $repo_tag for $repo_name\n";
     clone_repo($repo_name, $repo_url, $repo_tag);
 }
 
 # After cloning, set up a minimal Linux build environment
 # You can add additional steps for configuring and building the kernel, BusyBox, etc.
-print "Repositories have been cloned and checked out to their specified tags.\n";
+print "Repositories have been cloned and checked out to their specified tags (or latest stable versions).\n";
 
 # Example of how you would build the Linux kernel (just an example):
 # This would need to be customized to your environment!
