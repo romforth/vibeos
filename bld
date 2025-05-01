@@ -85,7 +85,7 @@ sub clone_repo {
     chdir($base_dir) or die "Failed to change back to base directory: $!\n";
 }
 
-# Function to install dependencies and build tools (git, make, gcc, etc.)
+# Function to install dependencies (generic version)
 sub install_dependencies {
     print "Installing dependencies...\n";
     system("sudo apt update") == 0 or die "Failed to update packages: $!\n";
@@ -93,34 +93,29 @@ sub install_dependencies {
         or die "Failed to install build tools and dependencies: $!\n";
 }
 
-# Function to build Git from source
-sub build_git {
-    print "Building Git from source...\n";
-    chdir("$base_dir/git") or die "Failed to change to git directory: $!\n";
+# Generic build function that takes the source directory, configure options, build, and install commands
+sub build_from_source {
+    my ($source_dir, $config_cmd, $build_cmd, $install_cmd) = @_;
 
-    system("make prefix=/usr/local all") == 0 or die "Git build failed: $!\n";
-    system("sudo make prefix=/usr/local install") == 0 or die "Git installation failed: $!\n";
-}
+    print "Building $source_dir from source...\n";
+    chdir($source_dir) or die "Failed to change to $source_dir directory: $!\n";
 
-# Function to build GCC from source
-sub build_gcc {
-    print "Building GCC from source...\n";
-    chdir("$base_dir/gcc") or die "Failed to change to gcc directory: $!\n";
+    # Run the configuration command if provided
+    if ($config_cmd) {
+        print "Running configuration: $config_cmd\n";
+        system($config_cmd) == 0 or die "Configuration failed for $source_dir: $!\n";
+    }
 
-    system("./configure --prefix=/usr/local --enable-languages=c,c++") == 0
-        or die "GCC configure failed: $!\n";
-    system("make -j$(nproc)") == 0 or die "GCC build failed: $!\n";
-    system("sudo make install") == 0 or die "GCC installation failed: $!\n";
-}
+    # Run the build command
+    print "Building with: $build_cmd\n";
+    system($build_cmd) == 0 or die "Build failed for $source_dir: $!\n";
 
-# Function to build Make from source
-sub build_make {
-    print "Building Make from source...\n";
-    chdir("$base_dir/make") or die "Failed to change to make directory: $!\n";
+    # Run the installation command
+    print "Installing with: $install_cmd\n";
+    system($install_cmd) == 0 or die "Installation failed for $source_dir: $!\n";
 
-    system("./configure") == 0 or die "Make configure failed: $!\n";
-    system("make -j$(nproc)") == 0 or die "Make build failed: $!\n";
-    system("sudo make install") == 0 or die "Make installation failed: $!\n";
+    # Change back to the base directory
+    chdir($base_dir) or die "Failed to change back to base directory: $!\n";
 }
 
 # Clone all repositories and checkout the appropriate tag (either manual or latest)
@@ -141,10 +136,29 @@ foreach my $repo_name (keys %repos) {
 # Install dependencies (e.g., build tools, compilers)
 install_dependencies();
 
-# Build Git, GCC, and Make from source
-build_git();
-build_gcc();
-build_make();
+# Build Git from source
+build_from_source(
+    "$base_dir/git",
+    "",  # No configuration needed for Git
+    "make prefix=/usr/local all",  # Build Git
+    "sudo make prefix=/usr/local install",  # Install Git
+);
+
+# Build GCC from source
+build_from_source(
+    "$base_dir/gcc",
+    "./configure --prefix=/usr/local --enable-languages=c,c++",  # Configure GCC
+    "make -j$(nproc)",  # Build GCC using multiple cores
+    "sudo make install",  # Install GCC
+);
+
+# Build Make from source
+build_from_source(
+    "$base_dir/make",
+    "./configure",  # Configure Make
+    "make -j$(nproc)",  # Build Make
+    "sudo make install",  # Install Make
+);
 
 # After cloning and building, set up a minimal Linux build environment
 # Example of how you would build the Linux kernel using defconfig:
