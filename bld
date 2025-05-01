@@ -28,6 +28,51 @@ my %repos = (
         url  => "https://github.com/mirror/make.git",
         tag  => "v4.3", # Manually specified version (replace with the latest if desired)
     },
+    # Add more LFS packages here
+    "binutils" => {
+        url  => "https://sourceware.org/git/binutils-gdb.git",
+        tag  => "binutils-2.38",  # Specify the version you want
+    },
+    "glibc" => {
+        url  => "https://sourceware.org/git/glibc.git",
+        tag  => "glibc-2.34",  # Specify the version you want
+    },
+    "coreutils" => {
+        url  => "https://github.com/coreutils/coreutils.git",
+        tag  => "v8.32",  # Specify the version you want
+    },
+    "bash" => {
+        url  => "https://git.savannah.gnu.org/git/bash.git",
+        tag  => "bash-5.1",  # Specify the version you want
+    },
+    "sed" => {
+        url  => "https://git.savannah.gnu.org/git/sed.git",
+        tag  => "sed-4.8",  # Specify the version you want
+    },
+    "awk" => {
+        url  => "https://github.com/awkward/awk.git",
+        tag  => "v20210128",  # Specify the version you want
+    },
+    "tar" => {
+        url  => "https://git.savannah.gnu.org/git/tar.git",
+        tag  => "tar-1.34",  # Specify the version you want
+    },
+    "gzip" => {
+        url  => "https://git.savannah.gnu.org/git/gzip.git",
+        tag  => "gzip-1.10",  # Specify the version you want
+    },
+    "e2fsprogs" => {
+        url  => "https://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git",
+        tag  => "e2fsprogs-1.46.2",  # Specify the version you want
+    },
+    "util-linux" => {
+        url  => "https://github.com/karelzak/util-linux.git",
+        tag  => "v2.37.3",  # Specify the version you want
+    },
+    "parted" => {
+        url  => "https://git.savannah.gnu.org/git/parted.git",
+        tag  => "parted-3.4",  # Specify the version you want
+    },
 );
 
 # Define where to clone the repositories
