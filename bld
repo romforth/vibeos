@@ -92,15 +92,15 @@ foreach my $repo_name (keys %repos) {
 # You can add additional steps for configuring and building the kernel, BusyBox, etc.
 print "Repositories have been cloned and checked out to their specified tags (or latest stable versions).\n";
 
-# Example of how you would build the Linux kernel (just an example):
+# Example of how you would build the Linux kernel using defconfig (just an example):
 # This would need to be customized to your environment!
 print "You can now proceed to configure and build the kernel and BusyBox manually:\n";
 print "  cd $base_dir/linux\n";
-print "  make menuconfig  # Configure the kernel\n";
-print "  make             # Build the kernel\n";
+print "  make x86_64_defconfig  # Configure the kernel with a minimal defconfig for x86_64\n";
+print "  make                   # Build the kernel\n";
 print "  cd ../busybox\n";
-print "  make menuconfig  # Configure BusyBox\n";
-print "  make             # Build BusyBox\n";
+print "  make defconfig         # Configure BusyBox with the default defconfig\n";
+print "  make                   # Build BusyBox\n";
 
 print "Done!\n";
 
