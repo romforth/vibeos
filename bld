@@ -7,131 +7,266 @@ use LWP::Simple;
 use JSON;
 
 # Define the repositories to pull with manual or latest tags
-my %repos = (
-    "linux"  => {
-        url  => "https://github.com/torvalds/linux.git",
-        tag  => "v5.15.0",  # Manually defined version (you can replace this with 'latest' to use the latest tag)
+my %repos = {
+    'iproute2' => {
+        'url' => 'https://github.com/shemminger/iproute2.git',
+        'tag' => 'v5.17.0'
     },
-    "busybox" => {
-        url  => "https://github.com/mirror/busybox.git",
-        tag  => "1.35.0",   # Manually defined version (you can replace this with 'latest' to use the latest tag)
+    'musl' => {
+        'url' => 'https://github.com/sabotage-linux/musl.git',
+        'tag' => 'v1.2.2'
     },
-    "git" => {
-        url  => "https://github.com/git/git.git",
-        tag  => "v2.37.0",  # You can change the tag to the latest version or specify a custom tag
+    'gmp' => {
+        'url' => 'https://gmplib.org/repo/gmp/',
+        'tag' => 'gmp-6.3.0'
     },
-    "gcc" => {
-        url  => "https://github.com/gcc-mirror/gcc.git",
-        tag  => "releases/gcc-11.2.0", # You can change to the latest stable version or use a custom tag
+    'bash' => [
+        {
+          'tag' => 'bash-5.1',
+          'url' => 'https://git.savannah.gnu.org/git/bash.git'
+        },
+        {
+          'tag' => 'v5.2.26',
+          'url' => 'git://git.savannah.gnu.org/bash.git'
+        }
+    ],
+    'gzip' => {
+        'tag' => 'gzip-1.10',
+        'url' => 'https://git.savannah.gnu.org/git/gzip.git'
     },
-    "make" => {
-        url  => "https://github.com/mirror/make.git",
-        tag  => "v4.3", # Manually specified version (replace with the latest if desired)
+    'acl' => {
+        'url' => 'https://git.savannah.gnu.org/git/acl.git',
+        'tag' => 'v2.3.1'
     },
-    # Add more LFS packages here
-    "binutils" => {
-        url  => "https://sourceware.org/git/binutils-gdb.git",
-        tag  => "binutils-2.38",  # Specify the version you want
+    'net-tools' => {
+        'tag' => 'v1.60.0',
+        'url' => 'https://github.com/schweikert/net-tools.git'
     },
-    "glibc" => {
-        url  => "https://sourceware.org/git/glibc.git",
-        tag  => "glibc-2.34",  # Specify the version you want
+    'shadow' => {
+        'tag' => 'v4.14.0',
+        'url' => 'https://github.com/shadow-maint/shadow.git'
+     },
+    'openrc' => {
+        'tag' => '0.44.5',
+        'url' => 'https://github.com/OpenRC/openrc.git'
+     },
+    'xz-utils' => {
+        'url' => 'https://git.tukaani.org/xz.git',
+        'tag' => 'v5.2.5'
     },
-    "coreutils" => {
-        url  => "https://github.com/coreutils/coreutils.git",
-        tag  => "v8.32",  # Specify the version you want
+    'attr' => {
+        'tag' => 'v2.5.2',
+        'url' => 'https://git.savannah.gnu.org/git/attr.git'
     },
-    "bash" => {
-        url  => "https://git.savannah.gnu.org/git/bash.git",
-        tag  => "bash-5.1",  # Specify the version you want
+    'busybox' => {
+        'url' => 'https://github.com/mirror/busybox.git',
+        'tag' => '1.35.0'
+      },
+    'git' => {
+        'tag' => 'v2.37.0',
+        'url' => 'https://github.com/git/git.git'
     },
-    "sed" => {
-        url  => "https://git.savannah.gnu.org/git/sed.git",
-        tag  => "sed-4.8",  # Specify the version you want
+    'binutils' => [
+        {
+          'url' => 'https://sourceware.org/git/binutils-gdb.git',
+          'tag' => 'binutils-2.38'
+        },
+        {
+          'url' => 'git://sourceware.org/git/binutils-gdb.git',
+          'tag' => 'binutils-2_42-branch'
+        }
+    ],
+    'xorg-drivers' => {
+        'url' => 'https://gitlab.freedesktop.org/xorg/driver/xf86-video-vesa.git',
+        'tag' => 'vesa-2.5.0'
     },
-    "awk" => {
-        url  => "https://github.com/awkward/awk.git",
-        tag  => "v20210128",  # Specify the version you want
+    'e2fsprogs' => {
+        'tag' => 'e2fsprogs-1.46.2',
+        'url' => 'https://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git'
     },
-    "tar" => {
-        url  => "https://git.savannah.gnu.org/git/tar.git",
-        tag  => "tar-1.34",  # Specify the version you want
+    'glibc' => [
+        {
+          'url' => 'https://sourceware.org/git/glibc.git',
+          'tag' => 'glibc-2.34'
+        },
+        {
+          'url' => 'https://sourceware.org/git/glibc.git',
+          'tag' => 'glibc-2.39'
+        }
+    ],
+    'gettext' => {
+        'tag' => 'v0.22.4',
+        'url' => 'https://git.savannah.gnu.org/git/gettext.git'
     },
-    "gzip" => {
-        url  => "https://git.savannah.gnu.org/git/gzip.git",
-        tag  => "gzip-1.10",  # Specify the version you want
+    'procps' => {
+        'url' => 'https://gitlab.com/procps-ng/procps.git',
+        'tag' => 'v3.3.17'
     },
-    "e2fsprogs" => {
-        url  => "https://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git",
-        tag  => "e2fsprogs-1.46.2",  # Specify the version you want
+    'gawk' => {
+        'tag' => 'v5.3.0',
+        'url' => 'git://git.savannah.gnu.org/gawk.git'
     },
-    "util-linux" => {
-        url  => "https://github.com/karelzak/util-linux.git",
-        tag  => "v2.37.3",  # Specify the version you want
+    'zstd' => {
+        'url' => 'https://github.com/facebook/zstd.git',
+        'tag' => 'v1.5.6'
     },
-    "parted" => {
-        url  => "https://git.savannah.gnu.org/git/parted.git",
-        tag  => "parted-3.4",  # Specify the version you want
+    'xorg-xinit' => {
+        'tag' => 'xinit-1.4.1',
+        'url' => 'https://gitlab.freedesktop.org/xorg/app/xinit.git'
     },
-    # Other missing packages
-    "openrc" => {
-        url  => "https://github.com/OpenRC/openrc.git",
-        tag  => "0.44.5",  # Specific version of OpenRC
+    'util-linux' => [
+        {
+          'url' => 'https://github.com/karelzak/util-linux.git',
+          'tag' => 'v2.37.3'
+        },
+        {
+          'url' => 'https://github.com/util-linux/util-linux.git',
+          'tag' => 'v2.39.3'
+        }
+    ],
+    'automake' => {
+        'url' => 'git://git.savannah.gnu.org/automake.git',
+        'tag' => 'v1.16.5'
     },
-    "iproute2" => {
-        url  => "https://github.com/shemminger/iproute2.git",
-        tag  => "v5.17.0",  # Latest stable version of iproute2
+    'procps-ng' => {
+        'tag' => 'v4.0.4',
+        'url' => 'https://gitlab.com/procps-ng/procps.git'
     },
-    "net-tools" => {
-        url  => "https://github.com/schweikert/net-tools.git"
-        tag  => "v1.60.0",  # Latest stable version of net-tools
+    'xorg' => {
+        'url' => 'https://github.com/xorg/xserver.git',
+        'tag' => 'xorg-server-21.1.0'
     },
-    "xfsprogs" => {
-        url  => "https://github.com/xfs/xfsprogs.git",
-        tag  => "v5.14.0",  # Latest stable version of xfsprogs
+    'coreutils' => [
+        {
+          'url' => 'https://github.com/coreutils/coreutils.git',
+          'tag' => 'v8.32'
+        },
+        {
+          'url' => 'git://git.savannah.gnu.org/coreutils.git',
+          'tag' => 'v9.4'
+        }
+    ],
+    'make' => [
+        {
+          'url' => 'https://github.com/mirror/make.git',
+          'tag' => 'v4.3'
+        },
+        {
+          'url' => 'git://git.savannah.gnu.org/make.git',
+          'tag' => 'v4.4.1'
+        }
+    ],
+    'psmisc' => {
+        'tag' => 'v23.6',
+        'url' => 'https://gitlab.com/psmisc/psmisc.git'
+     },
+    'grep' => {
+        'tag' => 'v3.11',
+        'url' => 'git://git.savannah.gnu.org/grep.git'
     },
-    "musl" => {
-        url  => "https://github.com/sabotage-linux/musl.git",
-        tag  => "v1.2.2",  # Latest stable version of musl
+    'linux' => [
+        {
+          'tag' => 'v5.15.0',
+          'url' => 'https://github.com/torvalds/linux.git'
+        },
+        {
+          'url' => 'https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git',
+          'tag' => 'v6.6.30'
+        }
+    ],
+    'lvm2' => {
+        'tag' => 'v2.03.16',
+        'url' => 'https://github.com/lvmteam/lvm2.git'
     },
-    "uClibc" => {
-        url  => "https://github.com/uClibc/uClibc.git",
-        tag  => "2015.08",  # Specific stable version
+    'xfsprogs' => {
+        'url' => 'https://github.com/xfs/xfsprogs.git',
+        'tag' => 'v5.14.0'
     },
-    "bzip2" => {
-        url  => "https://github.com/mirror/bzip2.git",
-        tag  => "v1.0.8",  # Latest stable version
+    'xz' => {
+        'tag' => 'v5.6.0',
+        'url' => 'https://git.tukaani.org/xz.git'
     },
-    "xz-utils" => {
-        url  => "https://git.tukaani.org/xz.git",
-        tag  => "v5.2.5",  # Latest stable version of xz-utils
+    'sed' => [
+        {
+          'tag' => 'sed-4.8',
+          'url' => 'https://git.savannah.gnu.org/git/sed.git'
+        },
+        {
+          'url' => 'git://git.savannah.gnu.org/sed.git',
+          'tag' => 'v4.9'
+        }
+    ],
+    'bzip2' => [
+        {
+          'url' => 'https://github.com/mirror/bzip2.git',
+          'tag' => 'v1.0.8'
+        },
+        {
+          'url' => 'https://gitlab.com/bzip2/bzip2.git',
+          'tag' => 'v1.0.8'
+        }
+    ],
+    'uClibc' => {
+        'url' => 'https://github.com/uClibc/uClibc.git',
+        'tag' => '2015.08'
+     },
+    'mpfr' => {
+         'url' => 'https://gitlab.inria.fr/mpfr/mpfr.git',
+         'tag' => 'v4.2.1'
     },
-    "procps" => {
-        url  => "https://gitlab.com/procps-ng/procps.git",
-        tag  => "v3.3.17",  # Latest stable version of procps
+    'mpc' => {
+        'tag' => 'v1.3.1',
+        'url' => 'https://gitlab.inria.fr/mpc/mpc.git'
     },
-    "lvm2" => {
-        url  => "https://github.com/lvmteam/lvm2.git",
-        tag  => "v2.03.16",  # Latest stable version of lvm2
+    'zlib' => {
+        'tag' => 'v1.3.1',
+        'url' => 'https://github.com/madler/zlib.git'
     },
-    # Add X server components
-    "xorg" => {
-        url  => "https://github.com/xorg/xserver.git",
-        tag  => "xorg-server-21.1.0",  # Xorg server version
+    'gcc' => [
+        {
+          'url' => 'https://github.com/gcc-mirror/gcc.git',
+          'tag' => 'releases/gcc-11.2.0'
+        },
+        {
+          'url' => 'git://gcc.gnu.org/git/gcc.git',
+          'tag' => 'releases/gcc-13.2.0'
+        }
+    ],
+    'm4' => {
+        'tag' => 'v1.4.19',
+        'url' => 'git://git.savannah.gnu.org/m4.git'
     },
-    "xorg-drivers" => {
-        url  => "https://gitlab.freedesktop.org/xorg/driver/xf86-video-vesa.git",
-        tag  => "vesa-2.5.0",  # Basic video driver
+    'autoconf' => {
+        'tag' => 'v2.72',
+        'url' => 'git://git.savannah.gnu.org/autoconf.git'
     },
-    "xorg-utils" => {
-        url  => "https://gitlab.freedesktop.org/xorg/app/xprop.git",
-        tag  => "xprop-1.2.5",  # Utility for X11 window properties
+    'xorg-utils' => {
+        'tag' => 'xprop-1.2.5',
+        'url' => 'https://gitlab.freedesktop.org/xorg/app/xprop.git'
     },
-    "xorg-xinit" => {
-        url  => "https://gitlab.freedesktop.org/xorg/app/xinit.git",
-        tag  => "xinit-1.4.1",  # Utility for starting the X server
+    'flex' => {
+        'url' => 'https://github.com/westes/flex.git',
+        'tag' => 'v2.6.4'
     },
-);
+    'tar' => [
+        {
+          'url' => 'https://git.savannah.gnu.org/git/tar.git',
+          'tag' => 'tar-1.34'
+        },
+        {
+          'tag' => 'v1.35',
+          'url' => 'git://git.savannah.gnu.org/tar.git'
+        }
+    ],
+    'awk' => {
+        'url' => 'https://github.com/awkward/awk.git',
+        'tag' => 'v20210128'
+    },
+    'parted' => {
+        'url' => 'https://git.savannah.gnu.org/git/parted.git',
+        'tag' => 'parted-3.4'
+    },
+};
 
 # Define where to clone the repositories
 my $base_dir = "/tmp/minimal-linux";
