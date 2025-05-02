@@ -266,6 +266,42 @@ my %repos = {
         'url' => 'https://git.savannah.gnu.org/git/parted.git',
         'tag' => 'parted-3.4'
     },
+    'groff' => {
+        'url' => 'git://git.savannah.gnu.org/groff.git',
+        'tag' => 'v1.23.0'
+    },
+    'less' => {
+        'url' => 'https://github.com/gwsw/less.git',
+        'tag' => 'v633'
+    },
+    'libcap' => {
+        'url' => 'https://git.kernel.org/pub/scm/linux/kernel/git/morgan/libcap.git',
+        'tag' => 'v2.69'
+    },
+    'libxcrypt' => {
+        'url' => 'https://github.com/besser82/libxcrypt.git',
+        'tag' => 'v4.4.36'
+    },
+    'ncurses' => {
+        'url' => 'https://github.com/mirror/ncurses.git',
+        'tag' => 'v6.4'
+    },
+    'patch' => {
+        'url' => 'git://git.savannah.gnu.org/patch.git',
+        'tag' => 'v2.7.6'
+    },
+    'perl' => {
+        'url' => 'https://github.com/Perl/perl5.git',
+        'tag' => 'v5.38.2'
+    },
+    'python' => {
+        'url' => 'https://github.com/python/cpython.git',
+        'tag' => 'v3.12.2'
+    },
+    'texinfo' => {
+        'url' => 'git://git.savannah.gnu.org/texinfo.git',
+        'tag' => 'v7.0.3'
+    },
 };
 
 # Define where to clone the repositories
