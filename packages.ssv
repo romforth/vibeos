@@ -1,0 +1,94 @@
+acl 2.3.2 https://download.savannah.gnu.org/releases/acl/acl-2.3.2.tar.xz git://git.savannah.gnu.org/acl
+attr 2.5.2 https://download.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz git://git.savannah.gnu.org/attr
+autoconf 2.72 https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.xz git://git.savannah.gnu.org/autoconf
+automake 1.17 https://ftp.gnu.org/gnu/automake/automake-1.17.tar.xz git://git.savannah.gnu.org/automake
+bash 5.2.37 https://ftp.gnu.org/gnu/bash/bash-5.2.37.tar.gz git://git.savannah.gnu.org/bash
+bc 7.0.3 https://github.com/gavinhoward/bc/releases/download/7.0.3/bc-7.0.3.tar.xz https://github.com/gavinhoward/bc # TODO
+binutils 2.44 https://sourceware.org/pub/binutils/releases/binutils-2.44.tar.xz # TODO
+bison 3.8.2 https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz git://git.savannah.gnu.org/bison
+bzip2 1.0.8 https://www.sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz # TODO
+check 0.15.2 https://github.com/libcheck/check/releases/download/0.15.2/check-0.15.2.tar.gz https://github.com/libcheck/check # TODO
+coreutils 9.6 https://ftp.gnu.org/gnu/coreutils/coreutils-9.6.tar.xz git://git.savannah.gnu.org/coreutils
+dbus 1.16.0 https://dbus.freedesktop.org/releases/dbus/dbus-1.16.0.tar.xz # TODO
+dejagnu 1.6.3 https://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.3.tar.gz git://git.savannah.gnu.org/dejagnu
+diffutils 3.11 https://ftp.gnu.org/gnu/diffutils/diffutils-3.11.tar.xz git://git.savannah.gnu.org/diffutils
+e2fsprogs 1.47.2 https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.47.2/e2fsprogs-1.47.2.tar.gz # TODO
+elfutils 0.192 https://sourceware.org/ftp/elfutils/0.192/elfutils-0.192.tar.bz2 # TODO
+expat 2.6.4 https://prdownloads.sourceforge.net/expat/expat-2.6.4.tar.xz # TODO
+expect 5.45.4 https://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz # TODO
+file 5.46 https://astron.com/pub/file/file-5.46.tar.gz # TODO
+findutils 4.10.0 https://ftp.gnu.org/gnu/findutils/findutils-4.10.0.tar.xz git://git.savannah.gnu.org/findutils
+flex 2.6.4 https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz https://github.com/westes/flex # TODO
+flit_core 3.11.0 https://pypi.org/packages/source/f/flit-core/flit_core-3.11.0.tar.gz # TODO
+gawk 5.3.1 https://ftp.gnu.org/gnu/gawk/gawk-5.3.1.tar.xz git://git.savannah.gnu.org/gawk
+gcc 14.2.0 https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz # TODO
+gdbm 1.24 https://ftp.gnu.org/gnu/gdbm/gdbm-1.24.tar.gz # TODO
+gettext 0.24 https://ftp.gnu.org/gnu/gettext/gettext-0.24.tar.xz git://git.savannah.gnu.org/gettext
+glibc 2.41 https://ftp.gnu.org/gnu/glibc/glibc-2.41.tar.xz git://git.savannah.gnu.org/glibc
+gmp 6.3.0 https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz # TODO
+gperf 3.1 https://ftp.gnu.org/gnu/gperf/gperf-3.1.tar.gz git://git.savannah.gnu.org/gperf
+grep 3.11 https://ftp.gnu.org/gnu/grep/grep-3.11.tar.xz git://git.savannah.gnu.org/grep
+groff 1.23.0 https://ftp.gnu.org/gnu/groff/groff-1.23.0.tar.gz git://git.savannah.gnu.org/groff
+grub 2.12 https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz git://git.savannah.gnu.org/grub
+gzip 1.13 https://ftp.gnu.org/gnu/gzip/gzip-1.13.tar.xz git://git.savannah.gnu.org/gzip
+iana-etc 20250123 https://github.com/Mic92/iana-etc/releases/download/20250123/iana-etc-20250123.tar.gz https://github.com/Mic92/iana-etc # TODO
+inetutils 2.6 https://ftp.gnu.org/gnu/inetutils/inetutils-2.6.tar.xz git://git.savannah.gnu.org/inetutils
+intltool 0.51.0 https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz # TODO
+iproute2 6.13.0 https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-6.13.0.tar.xz # TODO
+jinja2 3.1.5 https://pypi.org/packages/source/J/Jinja2/jinja2-3.1.5.tar.gz # TODO
+kbd 2.7.1 https://www.kernel.org/pub/linux/utils/kbd/kbd-2.7.1.tar.xz # TODO
+kmod 34 https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-34.tar.xz # TODO
+less 668 https://www.greenwoodsoftware.com/less/less-668.tar.gz # TODO
+lfs-bootscripts 20240825 https://www.linuxfromscratch.org/lfs/downloads/development/lfs-bootscripts-20240825.tar.xz # TODO
+libcap2 2.73 https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.73.tar.xz # TODO
+libffi 3.4.7 https://github.com/libffi/libffi/releases/download/v3.4.7/libffi-3.4.7.tar.gz https://github.com/libffi/libffi # TODO
+libpipeline 1.5.8 https://download.savannah.gnu.org/releases/libpipeline/libpipeline-1.5.8.tar.gz git://git.savannah.gnu.org/libpipeline # TODO moved to gitlab
+libtool 2.5.4 https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz git://git.savannah.gnu.org/libtool
+libxcrypt 4.4.38 https://github.com/besser82/libxcrypt/releases/download/v4.4.38/libxcrypt-4.4.38.tar.xz https://github.com/besser82/libxcrypt # TODO
+linux 6.13.4 https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.13.4.tar.xz # TODO
+lz4 1.10.0 https://github.com/lz4/lz4/releases/download/v1.10.0/lz4-1.10.0.tar.gz https://github.com/lz4/lz4 # TODO
+m4 1.4.19 https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz git://git.savannah.gnu.org/m4	# invalid? only readme
+make 4.4.1 https://ftp.gnu.org/gnu/make/make-4.4.1.tar.gz git://git.savannah.gnu.org/make
+man-db 2.13.0 https://download.savannah.gnu.org/releases/man-db/man-db-2.13.0.tar.xz git://git.savannah.gnu.org/man-db # TODO MOVED_TO_GITLAB
+man-pages 6.12 https://www.kernel.org/pub/linux/docs/man-pages/man-pages-6.12.tar.xz # TODO
+markupsafe 3.0.2 https://pypi.org/packages/source/M/MarkupSafe/markupsafe-3.0.2.tar.gz # TODO
+meson 1.7.0 https://github.com/mesonbuild/meson/releases/download/1.7.0/meson-1.7.0.tar.gz https://github.com/mesonbuild/meson # TODO
+mpc 1.3.1 https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz # TODO
+mpfr 4.2.1 https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.xz # TODO
+ncurses 6.5 https://invisible-mirror.net/archives/ncurses/ncurses-6.5.tar.gz # TODO
+ninja 1.12.1 https://github.com/ninja-build/ninja/archive/v1.12.1/ninja-1.12.1.tar.gz https://github.com/ninja-build/ninja # TODO
+openssl 3.4.1 https://github.com/openssl/openssl/releases/download/openssl-3.4.1/openssl-3.4.1.tar.gz https://github.com/openssl/openssl # TODO
+patch 2.7.6 https://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz git://git.savannah.gnu.org/patch
+perl 5.40.1 https://www.cpan.org/src/5.0/perl-5.40.1.tar.xz # TODO
+pkgconf 2.3.0 https://distfiles.ariadne.space/pkgconf/pkgconf-2.3.0.tar.xz # TODO
+procps ng-4.0.5 https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-4.0.5.tar.xz # TODO
+psmisc 23.7 https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.7.tar.xz # TODO
+python 3.13.2 https://www.python.org/ftp/python/3.13.2/Python-3.13.2.tar.xz # TODO
+python-docs 3.13.2 https://www.python.org/ftp/python/doc/3.13.2/python-3.13.2-docs-html.tar.bz2 # TODO
+readline 8.2.13 https://ftp.gnu.org/gnu/readline/readline-8.2.13.tar.gz git://git.savannah.gnu.org/readline
+sed 4.9 https://ftp.gnu.org/gnu/sed/sed-4.9.tar.xz git://git.savannah.gnu.org/sed
+setuptools 75.8.1 https://pypi.org/packages/source/s/setuptools/setuptools-75.8.1.tar.gz # TODO
+shadow 4.17.3 https://github.com/shadow-maint/shadow/releases/download/4.17.3/shadow-4.17.3.tar.xz https://github.com/shadow-maint/shadow # TODO
+sysklogd 2.7.0 https://github.com/troglobit/sysklogd/releases/download/v2.7.0/sysklogd-2.7.0.tar.gz https://github.com/troglobit/sysklogd # TODO
+systemd 257.3 https://github.com/systemd/systemd/archive/v257.3/systemd-257.3.tar.gz https://github.com/systemd/systemd # TODO
+systemd-man-pages 257.3 https://anduin.linuxfromscratch.org/LFS/systemd-man-pages-257.3.tar.xz # TODO
+sysvinit 3.14 https://github.com/slicer69/sysvinit/releases/download/3.14/sysvinit-3.14.tar.xz https://github.com/slicer69/sysvinit # TODO
+tar 1.35 https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz git://git.savannah.gnu.org/tar
+tcl-src 8.6.16 https://downloads.sourceforge.net/tcl/tcl8.6.16-src.tar.gz # TODO
+tcl-html 8.6.16 https://downloads.sourceforge.net/tcl/tcl8.6.16-html.tar.gz # TODO
+texinfo 7.2 https://ftp.gnu.org/gnu/texinfo/texinfo-7.2.tar.xz git://git.savannah.gnu.org/texinfo
+tzdata 2025a https://www.iana.org/time-zones/repository/releases/tzdata2025a.tar.gz # TODO
+udev-lfs 20230818 https://anduin.linuxfromscratch.org/LFS/udev-lfs-20230818.tar.xz # TODO
+util-linux 2.40.4 https://www.kernel.org/pub/linux/utils/util-linux/v2.40/util-linux-2.40.4.tar.xz # TODO
+vim 9.1.1122 https://github.com/vim/vim/archive/v9.1.1122/vim-9.1.1122.tar.gz https://github.com/vim/vim # TODO
+wheel 0.45.1 https://pypi.org/packages/source/w/wheel/wheel-0.45.1.tar.gz # TODO
+XML-Parser 2.47 https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.47.tar.gz # TODO
+xz 5.6.4 https://github.com//tukaani-project/xz/releases/download/v5.6.4/xz-5.6.4.tar.xz https://github.com//tukaani-project/xz # TODO
+zlib 1.3.1 https://zlib.net/fossils/zlib-1.3.1.tar.gz # TODO
+zstd 1.5.7 https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz https://github.com/facebook/zstd # TODO
+bzip2-patch 1.0.8 https://www.linuxfromscratch.org/patches/lfs/development/bzip2-1.0.8-install_docs-1.patch # TODO
+coreutils-patch 9.6 https://www.linuxfromscratch.org/patches/lfs/development/coreutils-9.6-i18n-1.patch # TODO
+expect-patch 5.45.4 https://www.linuxfromscratch.org/patches/lfs/development/expect-5.45.4-gcc14-1.patch # TODO
+glibc-patch 2.41 https://www.linuxfromscratch.org/patches/lfs/development/glibc-2.41-fhs-1.patch # TODO
+kbd-patch 2.7.1 https://www.linuxfromscratch.org/patches/lfs/development/kbd-2.7.1-backspace-1.patch # TODO
+sysvinit-patch 3.14 https://www.linuxfromscratch.org/patches/lfs/development/sysvinit-3.14-consolidated-1.patch # TODO
